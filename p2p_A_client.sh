@@ -1,11 +1,13 @@
 #!/bin/sh
 
+UNSPECIFIED=NN
+
 if (($# < 1)) ; then
-	DEV_NAME=any
+	DEV_NAME=$UNSPECIFIED
 else
 	DEV_NAME=$1
 fi
-echo "searching for $DEV_NAME peer device"
+echo "searching for peer with device_name=$DEV_NAME"
 
 source ./p2p_common.sh
 
@@ -35,7 +37,7 @@ while [ -z $PEER_FOUND ] ; do
 	for PEER in $PEERS ; do
 		INFO=$(wpa_cli -i $IFACE p2p_peer $PEER | grep "$DEV_NAME")
 		
-		if [[ $INFO =~ P2P-AW64 ]] || [[ $DEV_NAME == any ]] ; then
+		if [[ $INFO =~ P2P-AW64 ]] || [[ $DEV_NAME == $UNSPECIFIED ]] ; then
 			PEER_FOUND=$PEER
 			INFO_DEV_NAME=$(wpa_cli -i $IFACE p2p_peer $PEER | grep "device_name")
 		fi
