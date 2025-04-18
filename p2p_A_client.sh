@@ -4,10 +4,12 @@ UNSPECIFIED=NN
 
 if (($# < 1)) ; then
 	DEV_NAME=$UNSPECIFIED
+	echo "searching for peers"
 else
 	DEV_NAME=$1
+	echo "searching for peer with device_name=$DEV_NAME"
 fi
-echo "searching for peer with device_name=$DEV_NAME"
+
 
 source ./p2p_common.sh
 
